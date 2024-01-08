@@ -12,8 +12,9 @@ public class DrivesController(IMapper mapper) : ControllerBase
     [HttpGet]
     public async ValueTask<IActionResult> GetAsync([FromServices] IDriveService driveService)
     {
-        var data = await driveService.GetAsync();
-        var result = mapper.Map<IEnumerable<StorageDriveDto>>(data);
+        var drives = await driveService.GetAsync();
+        var result = mapper.Map<IEnumerable<StorageDriveDto>>(drives);
+
         return result.Any() ? Ok(result) : NoContent();
     }
 }

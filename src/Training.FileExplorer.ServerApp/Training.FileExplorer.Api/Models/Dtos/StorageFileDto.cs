@@ -1,4 +1,4 @@
-using Training.FileExplorer.Application.FileStorage.Models.Storage;
+﻿using Training.FileExplorer.Application.FileStorage.Models.Storage;
 
 namespace Training.FileExplorer.Api.Models.Dtos;
 
@@ -9,10 +9,10 @@ public class StorageFileDto
     public string Path { get; set; } = string.Empty;
 
     public string DirectoryPath { get; set; } = string.Empty;
-
+    
     public long Size { get; set; }
 
     public string Extension { get; set; } = string.Empty;
-
+    
     public StorageEntryType EntryType { get; set; }
 }

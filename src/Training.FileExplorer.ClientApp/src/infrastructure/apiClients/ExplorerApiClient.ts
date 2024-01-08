@@ -8,7 +8,7 @@ export class ExplorerApiClient {
     public readonly baseUrl: string;
 
     constructor() {
-        this.baseUrl = "https://localhost:7195";
+        this.baseUrl = "https://localhost:7141/";
 
         this.client = new ApiClientBase({
             baseURL: this.baseUrl

@@ -6,22 +6,19 @@ namespace Training.FileExplorer.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class FilesController(
-    IWebHostEnvironment hostEnvironment, 
-    IFileProcessingService fileProcessingService
-    ) : ControllerBase
+public class FilesController(IWebHostEnvironment environment, IFileProcessingService fileProcessingService) : ControllerBase
 {
     [HttpGet("root/files/filter")]
     public async ValueTask<IActionResult> GetFilesSummary()
     {
-        var result = await fileProcessingService.GetFilterDataModelAsync(hostEnvironment.WebRootPath);
+        var result = await fileProcessingService.GetFilterDataModelAsync(environment.WebRootPath);
         return Ok(result);
     }
 
     [HttpGet("root/files/by-filter")]
     public async ValueTask<IActionResult> GetFilesByFilter([FromQuery] StorageFileFilterModel filterModel)
     {
-        filterModel.DirectoryPath = hostEnvironment.WebRootPath;
+        filterModel.DirectoryPath = environment.WebRootPath;
         var files = await fileProcessingService.GetByFilterAsync(filterModel);
         return files.Any() ? Ok(files) : NotFound(files);
     }

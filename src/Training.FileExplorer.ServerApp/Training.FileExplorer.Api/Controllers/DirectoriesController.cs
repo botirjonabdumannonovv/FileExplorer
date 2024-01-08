@@ -8,27 +8,23 @@ namespace Training.FileExplorer.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class DirectoriesController(
-    IDirectoryProcessingService directoryProcessingService,
-    IMapper mapper
-    ) : ControllerBase
+    IDirectoryProcessingService directoryProcessingService, 
+    IMapper mapper) : ControllerBase
 {
     [HttpGet("root/entries")]
     public async ValueTask<IActionResult> GetRootEntriesAsync(
         [FromQuery] StorageDirectoryEntryFilterModel filterModel,
-        [FromServices] IWebHostEnvironment environment
-    )
+        [FromServices] IWebHostEnvironment environment)
     {
-        var data = await directoryProcessingService.GetEntriesAsync(environment.WebRootPath, filterModel);
-        return data.Any() ? Ok(data) : NoContent();
+        var directories = await directoryProcessingService.GetEntriesAsync(environment.WebRootPath, filterModel);
+        return directories.Any() ? Ok(directories) : NoContent();
     }
 
     [HttpGet("{directoryPath}/entries")]
-    public async ValueTask<IActionResult> GetDirectoryEntriesByPathAsync(
-        [FromRoute] string directoryPath,
-        [FromQuery] StorageDirectoryEntryFilterModel filterModel
-    )
+    public async ValueTask<IActionResult> GetDirectoriesEntriesAsync([FromRoute] string directoryPath,
+        [FromQuery] StorageDirectoryEntryFilterModel filterModel)
     {
-        var data = await directoryProcessingService.GetEntriesAsync(directoryPath, filterModel);
-        return data.Any() ? Ok(data) : NoContent();
+        var directories = await directoryProcessingService.GetEntriesAsync(directoryPath, filterModel);
+        return directories.Any() ? Ok(directories) : NoContent();
     }
 }

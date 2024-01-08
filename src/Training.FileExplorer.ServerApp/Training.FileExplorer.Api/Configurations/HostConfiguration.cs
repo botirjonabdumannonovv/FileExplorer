@@ -9,19 +9,21 @@ public static partial class HostConfiguration
             .AddBrokers()
             .AddFileStorageInfrastructure()
             .AddDevTools()
-            .AddRestExposers()
-            .AddCustomCors();
-
+            .AddExposers()
+            .AddCors();
+        
         return new ValueTask<WebApplicationBuilder>(builder);
     }
 
     public static ValueTask<WebApplication> ConfigureAsync(this WebApplication app)
     {
-        app.UseDevTools();
-        app.MapRoutes();
-        app.UseCustomCors();
-        app.UseStaticFiles();
-
+        app
+            .UseDevTools()
+            .MapRoutes()
+            .UseCors()
+            .UseFileStorage()
+            .UseStaticFiles();
+        
         return new ValueTask<WebApplication>(app);
     }
 }
